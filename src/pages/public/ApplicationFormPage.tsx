@@ -115,11 +115,6 @@ export function ApplicationFormPage() {
     if (!formData.dateOfBirth) e.dateOfBirth = err.required;
     if (!formData.city.trim()) e.city = err.required;
     if (!formData.school.trim()) e.school = err.required;
-    if (!formData.gpa.trim()) e.gpa = err.required;
-    else {
-      const gpaVal = parseFloat(formData.gpa.replace(',', '.'));
-      if (Number.isNaN(gpaVal) || gpaVal < 0 || gpaVal > 5) e.gpa = err.gpaRange;
-    }
     if (!formData.cvFile) e.cv = err.required;
     if (!formData.essayFile) e.essay = err.required;
     if (!formData.videoFile) e.video = err.required;
@@ -203,10 +198,8 @@ export function ApplicationFormPage() {
 
         {step === 1 && (
           <div className="mt-10 space-y-8">
-            <div>
-              <h2 className="mb-4 border-b border-neutral-900/25 pb-2 text-xs font-medium uppercase tracking-widest text-neutral-700">
-                {COPY.application.step1Title}
-              </h2>
+            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
+              <h2 className="mb-4 text-sm font-semibold text-neutral-900">Applicant details</h2>
               <div className="grid gap-6 sm:grid-cols-2">
                 <Input
                   label={f.fullName}
@@ -259,6 +252,14 @@ export function ApplicationFormPage() {
                     ))}
                   </select>
                 </label>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
+              <h2 className="mb-4 text-sm font-semibold text-neutral-900">
+                Education & test scores
+              </h2>
+              <div className="grid gap-6 sm:grid-cols-2">
                 <Input
                   label={f.school}
                   name="school"
@@ -267,42 +268,97 @@ export function ApplicationFormPage() {
                   error={errors.school}
                 />
                 <Input
-                  label={f.gpa}
-                  name="gpa"
-                  value={formData.gpa}
-                  onChange={(e) => setFormField('gpa', e.target.value)}
-                  hint={COPY.application.gpaHint}
-                  error={errors.gpa}
+                  label={f.untScore}
+                  name="untScore"
+                  value={formData.untScore}
+                  onChange={(e) => setFormField('untScore', e.target.value)}
+                />
+                <Input
+                  label={f.ielts}
+                  name="ielts"
+                  value={formData.ielts}
+                  onChange={(e) => setFormField('ielts', e.target.value)}
+                />
+                <Input
+                  label={f.toefl}
+                  name="toefl"
+                  value={formData.toefl}
+                  onChange={(e) => setFormField('toefl', e.target.value)}
                 />
               </div>
             </div>
-            <FileUpload
-              label={f.cv}
-              accept={FILE_RULES.cv.accept}
-              maxSizeMB={FILE_RULES.cv.maxMb}
-              allowedMime={[FILE_RULES.cv.mime]}
-              value={formData.cvFile}
-              onChange={(file) => setFormField('cvFile', file)}
-            />
-            {errors.cv && <p className="text-xs text-[#F87171]">{errors.cv}</p>}
-            <FileUpload
-              label={COPY.application.essayLabel}
-              accept={FILE_RULES.essay.accept}
-              maxSizeMB={FILE_RULES.essay.maxMb}
-              allowedMime={[FILE_RULES.essay.mime]}
-              value={formData.essayFile}
-              onChange={(file) => setFormField('essayFile', file)}
-            />
-            {errors.essay && <p className="text-xs text-[#F87171]">{errors.essay}</p>}
-            <FileUpload
-              label={f.video}
-              accept={FILE_RULES.video.accept}
-              maxSizeMB={FILE_RULES.video.maxMb}
-              allowedMime={[FILE_RULES.video.mime]}
-              value={formData.videoFile}
-              onChange={(file) => setFormField('videoFile', file)}
-            />
-            {errors.video && <p className="text-xs text-[#F87171]">{errors.video}</p>}
+
+            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
+              <h2 className="mb-4 text-sm font-semibold text-neutral-900">
+                External profiles (optional)
+              </h2>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <Input
+                  label={f.codeforces}
+                  name="codeforces"
+                  value={formData.codeforces}
+                  onChange={(e) => setFormField('codeforces', e.target.value)}
+                />
+                <Input
+                  label={f.leetcode}
+                  name="leetcode"
+                  value={formData.leetcode}
+                  onChange={(e) => setFormField('leetcode', e.target.value)}
+                />
+                <Input
+                  label={f.github}
+                  name="github"
+                  value={formData.github}
+                  onChange={(e) => setFormField('github', e.target.value)}
+                />
+                <Input
+                  label={f.linkedin}
+                  name="linkedin"
+                  value={formData.linkedin}
+                  onChange={(e) => setFormField('linkedin', e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
+              <h2 className="mb-4 text-sm font-semibold text-neutral-900">Documents</h2>
+              <div className="space-y-6">
+                <div>
+                  <FileUpload
+                    label={f.cv}
+                    accept={FILE_RULES.cv.accept}
+                    maxSizeMB={FILE_RULES.cv.maxMb}
+                    allowedMime={[FILE_RULES.cv.mime]}
+                    value={formData.cvFile}
+                    onChange={(file) => setFormField('cvFile', file)}
+                  />
+                  {errors.cv && <p className="text-xs text-[#F87171]">{errors.cv}</p>}
+                </div>
+                <div>
+                  <FileUpload
+                    label={COPY.application.essayLabel}
+                    accept={FILE_RULES.essay.accept}
+                    maxSizeMB={FILE_RULES.essay.maxMb}
+                    allowedMime={[FILE_RULES.essay.mime]}
+                    value={formData.essayFile}
+                    onChange={(file) => setFormField('essayFile', file)}
+                  />
+                  {errors.essay && <p className="text-xs text-[#F87171]">{errors.essay}</p>}
+                </div>
+                <div>
+                  <FileUpload
+                    label={f.video}
+                    accept={FILE_RULES.video.accept}
+                    maxSizeMB={FILE_RULES.video.maxMb}
+                    allowedMime={[FILE_RULES.video.mime]}
+                    value={formData.videoFile}
+                    onChange={(file) => setFormField('videoFile', file)}
+                  />
+                  {errors.video && <p className="text-xs text-[#F87171]">{errors.video}</p>}
+                </div>
+              </div>
+            </div>
+
             <Button
               variant="publicPrimary"
               className="w-full sm:w-auto"
@@ -351,10 +407,48 @@ export function ApplicationFormPage() {
                   <dt className="text-xs uppercase text-neutral-500">{f.school}</dt>
                   <dd>{formData.school}</dd>
                 </div>
-                <div>
-                  <dt className="text-xs uppercase text-neutral-500">{f.gpa}</dt>
-                  <dd>{formData.gpa}</dd>
-                </div>
+                {formData.untScore && (
+                  <div>
+                    <dt className="text-xs uppercase text-neutral-500">{f.untScore}</dt>
+                    <dd>{formData.untScore}</dd>
+                  </div>
+                )}
+                {formData.ielts && (
+                  <div>
+                    <dt className="text-xs uppercase text-neutral-500">{f.ielts}</dt>
+                    <dd>{formData.ielts}</dd>
+                  </div>
+                )}
+                {formData.toefl && (
+                  <div>
+                    <dt className="text-xs uppercase text-neutral-500">{f.toefl}</dt>
+                    <dd>{formData.toefl}</dd>
+                  </div>
+                )}
+                {formData.codeforces && (
+                  <div>
+                    <dt className="text-xs uppercase text-neutral-500">{f.codeforces}</dt>
+                    <dd>{formData.codeforces}</dd>
+                  </div>
+                )}
+                {formData.leetcode && (
+                  <div>
+                    <dt className="text-xs uppercase text-neutral-500">{f.leetcode}</dt>
+                    <dd>{formData.leetcode}</dd>
+                  </div>
+                )}
+                {formData.github && (
+                  <div>
+                    <dt className="text-xs uppercase text-neutral-500">{f.github}</dt>
+                    <dd>{formData.github}</dd>
+                  </div>
+                )}
+                {formData.linkedin && (
+                  <div>
+                    <dt className="text-xs uppercase text-neutral-500">{f.linkedin}</dt>
+                    <dd>{formData.linkedin}</dd>
+                  </div>
+                )}
                 {formData.program && (
                   <div className="sm:col-span-2">
                     <dt className="text-xs uppercase text-neutral-500">{COPY.application.programSummary}</dt>

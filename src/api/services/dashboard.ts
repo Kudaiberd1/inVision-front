@@ -8,6 +8,13 @@ import type {
   DashboardEssayReviewResponse,
 } from '../../utils/dashboardCandidate';
 
+export interface DashboardExtraResponse {
+  codeforces?: string | null;
+  leetcode?: string | null;
+  github?: string | null;
+  linkedin?: string | null;
+}
+
 export async function fetchDashboardCandidates(): Promise<DashboardCandidateListItem[]> {
   const { data } = await apiClient.get<DashboardCandidateListItem[]>(ENDPOINTS.DASHBOARD_CANDIDATES);
   return data;
@@ -43,4 +50,11 @@ export async function patchDashboardCandidateStatus(
   status: 'pending' | 'accepted' | 'rejected',
 ): Promise<void> {
   await apiClient.patch(ENDPOINTS.DASHBOARD_STATUS(id), { status });
+}
+
+export async function fetchDashboardExtra(id: string): Promise<DashboardExtraResponse> {
+  const { data } = await apiClient.get<DashboardExtraResponse>(
+    ENDPOINTS.DASHBOARD_EXTRA_ACTIVITIES(id),
+  );
+  return data;
 }

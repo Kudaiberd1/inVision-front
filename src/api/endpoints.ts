@@ -6,6 +6,8 @@ export const ENDPOINTS = {
   DASHBOARD_ESSAY_REVIEW: (id: string) => `/api/dashboard/candidates/${encodeURIComponent(id)}/essay-review`,
   DASHBOARD_CHATBOT: (id: string) => `/api/dashboard/candidates/${encodeURIComponent(id)}/chatbot-analysis`,
   DASHBOARD_STATUS: (id: string) => `/api/dashboard/candidates/${encodeURIComponent(id)}/status`,
+  DASHBOARD_EXTRA_ACTIVITIES: (id: string) =>
+    `/api/dashboard/candidates/${encodeURIComponent(id)}/extra`,
 
   /** Applicant flow — no JWT; use with `getSpringApiBase()` (already includes `/api`). */
   FORMS_DRAFT: '/forms/draft',

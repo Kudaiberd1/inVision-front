@@ -9,8 +9,8 @@ export function AppShell() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen bg-[#F7F7F5] text-neutral-900">
-      <aside className="hidden h-screen w-56 shrink-0 flex-col border-r border-[#E5E5E4] bg-white md:flex">
+    <div className="min-h-screen bg-[#F7F7F5] text-neutral-900 md:pl-56">
+      <aside className="hidden h-screen w-56 shrink-0 flex-col border-r border-[#E5E5E4] bg-white md:fixed md:inset-y-0 md:left-0 md:flex">
         <div className="border-b border-[#E5E5E4] px-6 py-5">
           <span className="block text-lg font-bold tracking-tight text-neutral-900">{COPY.brand.name}</span>
           <span className="mt-0.5 block text-xs font-medium text-[#C8E63C]">
@@ -47,7 +47,7 @@ export function AppShell() {
           </Button>
         </div>
       </aside>
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <header className="flex items-center justify-between border-b border-[#E5E5E4] bg-white px-4 py-3 md:hidden">
           <button
             type="button"

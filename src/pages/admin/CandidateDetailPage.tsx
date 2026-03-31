@@ -9,6 +9,7 @@ import { useCandidateDetail } from '../../hooks/useCandidateDetail';
 import { CVReviewPanel } from '../../components/candidates/CVReviewPanel';
 import { EssayReviewPanel } from '../../components/candidates/EssayReviewPanel';
 import { ChatbotReviewPanel } from '../../components/candidates/ChatbotReviewPanel';
+import ExtraTabContent from '../../components/candidates/ExtraTabContent';
 import { DecisionBar } from '../../components/candidates/DecisionBar';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
@@ -17,6 +18,7 @@ const SECTIONS = [
   { key: 'cv', label: COPY.admin.sections.cv },
   { key: 'essay', label: COPY.admin.sections.essay },
   { key: 'chat', label: COPY.admin.sections.chatbot },
+  { key: 'extra', label: COPY.admin.sections.extra },
 ] as const;
 
 export function CandidateDetailPage() {
@@ -123,6 +125,7 @@ export function CandidateDetailPage() {
         {section === 0 && <CVReviewPanel candidate={candidate} />}
         {section === 1 && <EssayReviewPanel candidate={candidate} />}
         {section === 2 && <ChatbotReviewPanel candidate={candidate} />}
+        {section === 3 && <ExtraTabContent candidateId={candidate.id} />}
       </div>
 
       <div className="mx-auto flex max-w-6xl justify-between gap-4 px-4 py-6 md:px-8">

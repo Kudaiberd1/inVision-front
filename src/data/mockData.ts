@@ -1,5 +1,15 @@
 import { PROGRAMS } from '../constants';
-import type { Candidate, ChatbotQuestion, ChatMessage, Criteria, Program } from '../types';
+import type {
+  Candidate,
+  ChatbotQuestion,
+  ChatMessage,
+  CodeforcesStats,
+  Criteria,
+  GithubStats,
+  LeetcodeStats,
+  LinkedinStats,
+  Program,
+} from '../types';
 
 function programById(id: string): Program {
   const p = PROGRAMS.find((x) => x.id === id);
@@ -84,6 +94,47 @@ function critSum(
 ): Record<Criteria, string> {
   return { leadership, proactiveness, energy };
 }
+
+const kudaiberdiCodeforces: CodeforcesStats = {
+  platform: 'codeforces',
+  rating: 1847,
+  maxRating: 1923,
+  rank: 'Expert',
+  problemsSolved: 312,
+  contests: 47,
+  activedays: 183,
+  chartImageUrl: '/demo/codeforces-chart.png',
+};
+
+const kudaiberdiLeetcode: LeetcodeStats = {
+  platform: 'leetcode',
+  totalSolved: 234,
+  easySolved: 71,
+  mediumSolved: 142,
+  hardSolved: 21,
+  acceptanceRate: 61.4,
+  ranking: 48291,
+  chartImageUrl: '/demo/leetcode-chart.png',
+};
+
+const kudaiberdiLinkedin: LinkedinStats = {
+  platform: 'linkedin',
+  headline: 'Software Engineer · CS Student at SDU · Competitive Programmer',
+  connections: 183,
+  skills: ['Java', 'Spring Boot', 'React', 'PostgreSQL', 'Python', 'TypeScript', 'AWS', 'System Design'],
+  certifications: ['AWS Cloud Practitioner', 'CS50x Harvard', 'Spring Framework Udemy'],
+  summary:
+    'Passionate backend developer and competitive programmer. I love building things that matter and solving hard problems.',
+};
+
+const kudaiberdiGithub: GithubStats = {
+  platform: 'github',
+  publicRepos: 18,
+  followers: 34,
+  totalStars: 23,
+  totalCommits: 847,
+  topLanguages: ['Java', 'TypeScript', 'Python', 'SQL'],
+};
 
 export const MOCK_CANDIDATES: Candidate[] = [
   {
@@ -173,6 +224,52 @@ export const MOCK_CANDIDATES: Candidate[] = [
         'Sustains motivation through responsibility to others; uses rituals to restore team energy.',
       ),
     },
+    extraActivities: [
+      {
+        id: 'cf-1',
+        platform: 'codeforces',
+        handle: 'kudaiberdi_z',
+        profileUrl: 'https://codeforces.com/profile/kudaiberdi_z',
+        available: true,
+        aiScore: 72,
+        aiExplanation:
+          "The candidate's Codeforces profile shows consistent competitive programming activity with a rating of 1847 (Expert level). They have participated in 47 contests and solved 312 problems. The upward rating trajectory demonstrates strong problem-solving growth over time. Evidence of proactiveness: they participate regularly without external pressure. Energy signal: active on the platform across 180+ days. Leadership signal is low as competitive programming is individual. Overall this is a strong technical signal for the Technology track.",
+        stats: kudaiberdiCodeforces,
+      },
+      {
+        id: 'lc-1',
+        platform: 'leetcode',
+        handle: 'kudaiberdi_z',
+        profileUrl: 'https://leetcode.com/kudaiberdi_z',
+        available: true,
+        aiScore: 65,
+        aiExplanation:
+          'The LeetCode profile shows 234 problems solved with a 61% acceptance rate. Medium problem count (142) is notably higher than Easy (71), suggesting comfort with complex algorithmic thinking. Hard problems (21) indicate willingness to challenge oneself. This supports proactiveness and energy signals. Ranking places the candidate in the top 15% globally.',
+        stats: kudaiberdiLeetcode,
+      },
+      {
+        id: 'li-1',
+        platform: 'linkedin',
+        handle: 'kudaiberdi-zainiyev',
+        profileUrl: 'https://linkedin.com/in/kudaiberdi-zainiyev',
+        available: true,
+        aiScore: 58,
+        aiExplanation:
+          'The LinkedIn profile is moderately developed. 3 certifications and 8 listed skills show awareness of professional branding. Connection count (180+) is modest but reasonable for a student. The headline and summary demonstrate self-awareness of career direction. Leadership signal: mentions team project involvement. Proactiveness: voluntarily built a professional presence before being required to.',
+        stats: kudaiberdiLinkedin,
+      },
+      {
+        id: 'gh-1',
+        platform: 'github',
+        handle: 'kudaiberdi-z',
+        profileUrl: 'https://github.com/kudaiberdi-z',
+        available: true,
+        aiScore: 70,
+        aiExplanation:
+          'The GitHub profile contains 18 public repositories with a total of 847 commits in the last year. Top languages (Java, TypeScript, Python) align with the CV content, increasing authenticity confidence. 3 repositories have 5+ stars indicating community recognition. Consistent commit history across weekdays and weekends is a strong energy signal — this candidate codes outside of school hours.',
+        stats: kudaiberdiGithub,
+      },
+    ],
   },
   {
     id: '2',
@@ -261,6 +358,27 @@ export const MOCK_CANDIDATES: Candidate[] = [
         'Motivated by measurable impact; team rituals are pragmatic, not theatrical.',
       ),
     },
+    extraActivities: [
+      {
+        id: 'li-2',
+        platform: 'linkedin',
+        handle: 'dauren-seitkali',
+        profileUrl: 'https://linkedin.com/in/dauren-seitkali',
+        available: true,
+        aiScore: 62,
+        aiExplanation:
+          'LinkedIn shows a clear operator narrative with case competitions and internship experience. Activity cadence is moderate; more long-form posts or articles would strengthen leadership signaling.',
+        stats: {
+          platform: 'linkedin',
+          headline: 'Business Analytics Student · Case Club President',
+          connections: 256,
+          skills: ['Excel', 'SQL', 'PowerBI', 'Storytelling with data'],
+          certifications: ['Google Data Analytics Certificate'],
+          summary:
+            'Aspiring operator focused on turning messy spreadsheets into clear decisions for founders and teams.',
+        },
+      },
+    ],
   },
   {
     id: '3',

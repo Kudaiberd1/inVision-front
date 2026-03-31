@@ -1,4 +1,4 @@
-import type { FieldOfStudy, Program, StudentLevel } from '../types';
+import type { ExtraPlatform, FieldOfStudy, Program, StudentLevel } from '../types';
 
 export const CRITERIA = ['leadership', 'proactiveness', 'energy'] as const;
 
@@ -157,21 +157,25 @@ export const COPY = {
       dateOfBirth: 'Date of Birth',
       city: 'City',
       school: 'School / University',
-      gpa: 'GPA',
+      untScore: 'UNT score (optional)',
+      ielts: 'IELTS overall score (optional)',
+      toefl: 'TOEFL score (optional)',
       studentLevel: 'Student type',
+      codeforces: 'Codeforces profile (nickname, optional)',
+      leetcode: 'LeetCode profile (nickname, optional)',
+      github: 'GitHub profile (nickname, optional)',
+      linkedin: 'LinkedIn profile (link, optional)',
       cv: 'CV (PDF)',
       video: 'Introduction video (MP4)',
     },
     errors: {
       required: 'This field is required',
       email: 'Enter a valid email',
-      gpaRange: 'Enter a GPA between 0.0 and 5.0',
       confirm: 'You must confirm accuracy',
       filesStep: 'Please fix file errors before continuing',
       submitFailed: 'Could not submit application. Please try again.',
       draftFailed: 'Could not start your application. Check your connection and try again.',
     },
-    gpaHint: 'out of 5.0 or 4.0',
     essayLabel: 'Motivation essay (PDF)',
     confirmAccuracy:
       'I confirm all information is accurate and the motivation essay PDF is my own work.',
@@ -248,6 +252,7 @@ export const COPY = {
       cv: 'CV Review',
       essay: 'Essay Review',
       chatbot: 'Chatbot Analysis',
+      extra: 'Extra',
     },
     openCvPdf: 'Open CV (PDF)',
     openEssayPdf: 'Open essay (PDF)',
@@ -257,6 +262,20 @@ export const COPY = {
     confidence: (n: number) => `Confidence: ${n}%`,
   },
 } as const;
+
+export const PLATFORM_LABELS: Record<ExtraPlatform, string> = {
+  codeforces: 'Codeforces',
+  leetcode: 'LeetCode',
+  linkedin: 'LinkedIn',
+  github: 'GitHub',
+};
+
+export const PLATFORM_COLORS: Record<ExtraPlatform, string> = {
+  codeforces: '#1a1a2e',
+  leetcode: '#FFA116',
+  linkedin: '#0A66C2',
+  github: '#333333',
+};
 
 export const FILE_RULES = {
   cv: { accept: '.pdf', mime: 'application/pdf', maxMb: 5 },

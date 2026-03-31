@@ -50,6 +50,61 @@ export interface ChatbotAnalysis {
   criteriaSummaries: Record<Criteria, string>;
 }
 
+export type ExtraPlatform = 'codeforces' | 'leetcode' | 'linkedin' | 'github';
+
+export interface CodeforcesStats {
+  platform: 'codeforces';
+  rating: number;
+  maxRating: number;
+  rank: string;
+  problemsSolved: number;
+  contests: number;
+  activedays: number;
+  chartImageUrl?: string;
+}
+
+export interface LeetcodeStats {
+  platform: 'leetcode';
+  totalSolved: number;
+  easySolved: number;
+  mediumSolved: number;
+  hardSolved: number;
+  acceptanceRate: number;
+  ranking: number;
+  chartImageUrl?: string;
+}
+
+export interface LinkedinStats {
+  platform: 'linkedin';
+  headline: string;
+  connections: number;
+  skills: string[];
+  certifications: string[];
+  summary: string;
+  chartImageUrl?: string;
+}
+
+export interface GithubStats {
+  platform: 'github';
+  publicRepos: number;
+  followers: number;
+  totalStars: number;
+  totalCommits: number;
+  topLanguages: string[];
+  chartImageUrl?: string;
+}
+
+export interface ExtraActivity {
+  id: string;
+  platform: ExtraPlatform;
+  handle: string;
+  profileUrl: string;
+  available: boolean;
+  aiScore: number;
+  aiExplanation: string;
+  stats: CodeforcesStats | LeetcodeStats | LinkedinStats | GithubStats;
+}
+
 export interface Program {
   id: string;
   category: string;
@@ -88,6 +143,7 @@ export interface Candidate {
   cvReview: CVReview;
   essayReview: EssayReview;
   chatbotAnalysis: ChatbotAnalysis;
+  extraActivities?: ExtraActivity[];
 }
 
 // --- Application form (applicant submits) ---
@@ -100,7 +156,13 @@ export interface ApplicationFormData {
   program: Program | null;
   city: string;
   school: string;
-  gpa: string;
+  untScore: string;
+  ielts: string;
+  toefl: string;
+  codeforces: string;
+  leetcode: string;
+  github: string;
+  linkedin: string;
   cvFile: File | null;
   essayFile: File | null;
   videoFile: File | null;

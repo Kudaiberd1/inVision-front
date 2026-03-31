@@ -44,12 +44,33 @@ export function buildSpringApplicationFormData(data: ApplicationFormData): FormD
   form.append('dateOfBirth', formatDateOfBirthForSpring(data.dateOfBirth));
   form.append('city', data.city.trim());
   form.append('schoolUniversity', data.school.trim());
-  form.append('gpa', data.gpa.trim());
+  if (data.untScore.trim()) {
+    form.append('unt_score', data.untScore.trim());
+  }
+  if (data.ielts.trim()) {
+    form.append('IELTS', data.ielts.trim());
+  }
+  if (data.toefl.trim()) {
+    form.append('TOEFL', data.toefl.trim());
+  }
   const programName = data.program?.name?.trim();
   if (!programName) {
     throw new Error('Missing degree program for fieldOfStudy');
   }
   form.append('fieldOfStudy', programName);
+
+  if (data.codeforces.trim()) {
+    form.append('codeforces', data.codeforces.trim());
+  }
+  if (data.leetcode.trim()) {
+    form.append('leetcode', data.leetcode.trim());
+  }
+  if (data.github.trim()) {
+    form.append('github', data.github.trim());
+  }
+  if (data.linkedin.trim()) {
+    form.append('linkedin', data.linkedin.trim());
+  }
 
   if (!data.cvFile || !data.essayFile || !data.videoFile) {
     throw new Error('Missing required files');
