@@ -19,19 +19,10 @@ export function ChatbotReviewPanel({ candidate }: ChatbotReviewPanelProps) {
 
   const totalTurns = chatbotAnalysis.conversations.length;
 
-  const gradeFor = (s: number): number => {
-    if (s <= 0) return 0;
-    const g = Math.ceil((s / 100) * 3);
-    return Math.max(0, Math.min(3, g));
-  };
-
-  const grades: Record<Criteria, number> = {
-    leadership: gradeFor(chatbotAnalysis.criteriaScores.leadership),
-    proactiveness: gradeFor(chatbotAnalysis.criteriaScores.proactiveness),
-    energy: gradeFor(chatbotAnalysis.criteriaScores.energy),
-  };
-
-  const totalGrade = grades.leadership + grades.proactiveness + grades.energy;
+  const rawLeadership = chatbotAnalysis.criteriaScores.leadership;
+  const rawProactiveness = chatbotAnalysis.criteriaScores.proactiveness;
+  const rawEnergy = chatbotAnalysis.criteriaScores.energy;
+  const overallRaw = chatbotAnalysis.overallScore ?? Math.round((rawLeadership + rawProactiveness + rawEnergy) / 3);
 
   return (
     <ReviewSplitPane
@@ -90,19 +81,30 @@ export function ChatbotReviewPanel({ candidate }: ChatbotReviewPanelProps) {
         <div className="space-y-6">
           <div className="flex flex-wrap items-center gap-6">
             <ScoreRing
-              score={(totalGrade / 9) * 100}
-              label="Chatbot (0–9)"
-              displayScore={totalGrade}
+              score={(overallRaw / 5) * 100}
+              label="Chatbot (0–5)"
+              displayScore={overallRaw}
             />
             <div className="min-w-[160px] flex-1 space-y-3">
-              {CRITERIA.map((c) => (
-                <ScoreBar
-                  key={c}
-                  label={CRITERIA_LABELS[c] ?? c}
-                  score={(grades[c] / 3) * 100}
-                  displayScore={grades[c]}
-                />
-              ))}
+              {CRITERIA.map((c) => {
+                const raw = chatbotAnalysis.criteriaScores[c];
+                const grade = Math.max(0, Math.min(5, raw ?? 0));
+                let color = '#DC2626'; // low 0–1
+                if (grade >= 4) {
+                  color = '#4B5A00'; // high
+                } else if (grade >= 2) {
+                  color = '#F97316'; // mid
+                }
+                return (
+                  <ScoreBar
+                    key={c}
+                    label={CRITERIA_LABELS[c] ?? c}
+                    score={(grade / 5) * 100}
+                    displayScore={Math.round(grade)}
+                    color={color}
+                  />
+                );
+              })}
             </div>
           </div>
           <p className="text-sm leading-relaxed text-neutral-700">{chatbotAnalysis.summary}</p>

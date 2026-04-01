@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 import type { ExtraActivity } from '../../types';
 import { USE_MOCK_DATA } from '../../constants';
 import { MOCK_CANDIDATES } from '../../data/mockData';
-import { fetchDashboardExtra, type DashboardExtraResponse } from '../../api/services/dashboard';
+import {
+  fetchDashboardExtra,
+  fetchCodingReview,
+  type DashboardExtraResponse,
+  type CodingReviewResponse,
+} from '../../api/services/dashboard';
 import { ExtraActivityList } from './ExtraActivityList';
 import { ExtraActivityDetail } from './ExtraActivityDetail';
 
@@ -259,9 +264,25 @@ export default function ExtraTabContent({ candidateId }: ExtraTabContentProps) {
           return;
         }
 
-        const data = await fetchDashboardExtra(candidateId);
+        const [extraData, codingReview] = (await Promise.all([
+          fetchDashboardExtra(candidateId),
+          fetchCodingReview(candidateId),
+        ])) as [DashboardExtraResponse, CodingReviewResponse];
+
         if (cancelled) return;
-        const built = buildActivitiesFromDashboard(candidateId, data);
+
+        let built = buildActivitiesFromDashboard(candidateId, extraData);
+
+        built = built.map((activity) => {
+          if (activity.platform === 'codeforces' && codingReview.codeforces) {
+            return { ...activity, aiScore: codingReview.codeforces.finalScore };
+          }
+          if (activity.platform === 'leetcode' && codingReview.leetcode) {
+            return { ...activity, aiScore: codingReview.leetcode.finalScore };
+          }
+          return activity;
+        });
+
         setActivities(built);
         setLoading(false);
       } catch {
@@ -313,7 +334,11 @@ export default function ExtraTabContent({ candidateId }: ExtraTabContentProps) {
 
   if (selectedActivity) {
     return (
-      <ExtraActivityDetail activity={selectedActivity} onBack={() => setSelectedActivity(null)} />
+      <ExtraActivityDetail
+        candidateId={candidateId}
+        activity={selectedActivity}
+        onBack={() => setSelectedActivity(null)}
+      />
     );
   }
 

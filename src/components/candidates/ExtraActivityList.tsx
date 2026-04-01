@@ -60,7 +60,7 @@ export function ExtraActivityList({ activities, onView }: ExtraActivityListProps
                               : 'bg-rose-50 text-rose-800 ring-rose-100'
                         }`}
                       >
-                        AI score: {activity.aiScore}
+                        Score: {activity.aiScore}
                       </Badge>
                     )}
                   </div>

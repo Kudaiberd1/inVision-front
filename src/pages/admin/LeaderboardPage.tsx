@@ -17,7 +17,7 @@ export function LeaderboardPage() {
 
   const filtered = useMemo(() => {
     let list = [...candidates];
-    if (field !== 'all') list = list.filter((c) => c.fieldOfStudy === field);
+    if (field !== 'all') list = list.filter((c) => c.fieldOfStudy.name === field);
     if (status !== 'all') list = list.filter((c) => c.status === status);
     list.sort((a, b) => {
       if (sort === 'score') {

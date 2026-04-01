@@ -52,12 +52,38 @@ export interface ScoreOverviewResponse {
   chatLeadershipPoints: number;
   chatProactivenessPoints: number;
   chatEnergyPoints: number;
+  codeforcesScore: number;
+  leetcodeScore: number;
   untScore: number;
   ieltsScore: number;
   toeflScore: number;
   untPoints: number;
   ieltsPoints: number;
   toeflPoints: number;
+}
+
+export interface CodingReviewPlatform {
+  platform: 'codeforces' | 'leetcode';
+  handle: string;
+  submissionsLastYear: number;
+  proactiveness?: { score: number; reason?: string };
+  skill?: {
+    score?: number;
+    breakdown?: Record<
+      string,
+      {
+        value?: unknown;
+        score?: number;
+        reason?: string;
+      }
+    >;
+  };
+  finalScore: number;
+}
+
+export interface CodingReviewResponse {
+  codeforces?: CodingReviewPlatform | null;
+  leetcode?: CodingReviewPlatform | null;
 }
 
 export async function fetchDashboardCandidates(): Promise<DashboardCandidateListItem[]> {
@@ -116,6 +142,13 @@ export async function fetchDashboardCandidateDetail(
 export async function fetchScoreOverview(id: string): Promise<ScoreOverviewResponse> {
   const { data } = await apiClient.get<ScoreOverviewResponse>(
     ENDPOINTS.DASHBOARD_SCORE_OVERVIEW(id),
+  );
+  return data;
+}
+
+export async function fetchCodingReview(id: string): Promise<CodingReviewResponse> {
+  const { data } = await apiClient.get<CodingReviewResponse>(
+    ENDPOINTS.DASHBOARD_CODING_REVIEW(id),
   );
   return data;
 }

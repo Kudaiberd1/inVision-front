@@ -10,13 +10,6 @@ interface OverallTabContentProps {
   candidate: Candidate;
 }
 
-const demoExtraActivity = [
-  { key: 'codeforces', label: 'Codeforces', points: 3 },
-  { key: 'leetcode', label: 'LeetCode', points: 2 },
-  { key: 'github', label: 'GitHub', points: 2 },
-  { key: 'linkedin', label: 'LinkedIn', points: 1 },
-] as const;
-
 export function OverallTabContent({ candidateId }: OverallTabContentProps) {
   const [overview, setOverview] = useState<ScoreOverviewResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -45,6 +38,8 @@ export function OverallTabContent({ candidateId }: OverallTabContentProps) {
             chatLeadershipPoints: 1,
             chatProactivenessPoints: 0,
             chatEnergyPoints: 0,
+            codeforcesScore: 3,
+            leetcodeScore: 2,
             untScore: 120,
             ieltsScore: 7.5,
             toeflScore: 90,
@@ -155,18 +150,25 @@ export function OverallTabContent({ candidateId }: OverallTabContentProps) {
                   {section.title}
                 </p>
                 <p className="score-number text-lg font-semibold text-neutral-900">
-                  {section.total} / 9
+                  {section.total} 
                 </p>
               </div>
               <div className="space-y-2">
                 {section.breakdown.map((b) => {
-                  const grade = Math.max(0, Math.min(3, b.value));
+                  const grade = Math.max(0, Math.min(5, b.value ?? 0));
+                  let color = '#DC2626'; // low 0–1 -> red
+                  if (grade >= 4) {
+                    color = '#4B5A00'; // high 4–5 -> inVision lime
+                  } else if (grade >= 2) {
+                    color = '#F97316'; // mid 2–3 -> orange
+                  }
                   return (
                     <ScoreBar
                       key={b.label}
                       label={b.label}
-                      score={(grade / 3) * 100}
+                      score={(grade / 5) * 100}
                       displayScore={Math.round(grade)}
+                      color={color}
                     />
                   );
                 })}
@@ -216,21 +218,22 @@ export function OverallTabContent({ candidateId }: OverallTabContentProps) {
         </div>
       </section>
 
-      {/* External activity demo */}
+      {/* External activity (from overview) */}
       <section className="space-y-4 rounded-2xl border border-[#E5E5E4] bg-white p-5 shadow-sm">
         <h2 className="text-sm font-semibold text-neutral-900">External activity</h2>
         <div className="grid gap-3 md:grid-cols-2">
-          {demoExtraActivity.map((item) => (
-            <div
-              key={item.key}
-              className="flex items-center justify-between rounded-xl border border-[#E5E5E4] bg-[#F7F7F5] px-4 py-3"
-            >
-              <span className="text-sm text-neutral-800">{item.label}</span>
-              <span className="score-number text-sm font-semibold text-neutral-900">
-                {item.points} / 3
-              </span>
-            </div>
-          ))}
+          <div className="flex items-center justify-between rounded-xl border border-[#E5E5E4] bg-[#F7F7F5] px-4 py-3">
+            <span className="text-sm text-neutral-800">Codeforces</span>
+            <span className="score-number text-sm font-semibold text-neutral-900">
+              {overview.codeforcesScore ?? '-'}
+            </span>
+          </div>
+          <div className="flex items-center justify-between rounded-xl border border-[#E5E5E4] bg-[#F7F7F5] px-4 py-3">
+            <span className="text-sm text-neutral-800">LeetCode</span>
+            <span className="score-number text-sm font-semibold text-neutral-900">
+              {overview.leetcodeScore ?? '-'}
+            </span>
+          </div>
         </div>
       </section>
     </div>
