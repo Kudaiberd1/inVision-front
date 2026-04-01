@@ -29,7 +29,7 @@ export function CandidateRow({ candidate, rank }: CandidateRowProps) {
         <span className="score-number text-sm text-neutral-500">{rank}</span>
       </td>
       <td className="px-4 py-4 font-medium text-neutral-900">{candidate.fullName}</td>
-      <td className="px-4 py-4 text-sm text-neutral-600">{candidate.program.category}</td>
+      <td className="px-4 py-4 text-sm text-neutral-600">{candidate.fieldOfStudy}</td>
       <td className="px-4 py-4 text-sm text-neutral-500">
         {format(new Date(candidate.submissionDate), 'MMM d, yyyy')}
       </td>

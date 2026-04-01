@@ -6,23 +6,29 @@ import { LeaderboardTable } from '../../components/candidates/LeaderboardTable';
 import { Badge } from '../../components/ui/Badge';
 
 type SortKey = 'score' | 'date';
+type SortDir = 'asc' | 'desc';
 
 export function LeaderboardPage() {
   const { candidates, loading, error } = useCandidates();
   const [field, setField] = useState<FieldOfStudy | 'all'>('all');
   const [status, setStatus] = useState<DecisionStatus | 'all'>('all');
   const [sort, setSort] = useState<SortKey>('score');
+  const [sortDir, setSortDir] = useState<SortDir>('desc');
 
   const filtered = useMemo(() => {
     let list = [...candidates];
     if (field !== 'all') list = list.filter((c) => c.fieldOfStudy === field);
     if (status !== 'all') list = list.filter((c) => c.status === status);
     list.sort((a, b) => {
-      if (sort === 'score') return b.aiScore - a.aiScore;
-      return new Date(b.submissionDate).getTime() - new Date(a.submissionDate).getTime();
+      if (sort === 'score') {
+        return sortDir === 'desc' ? b.aiScore - a.aiScore : a.aiScore - b.aiScore;
+      }
+      const aTime = new Date(a.submissionDate).getTime();
+      const bTime = new Date(b.submissionDate).getTime();
+      return sortDir === 'desc' ? bTime - aTime : aTime - bTime;
     });
     return list;
-  }, [candidates, field, sort, status]);
+  }, [candidates, field, sort, sortDir, status]);
 
   return (
     <div className="bg-[#F7F7F5] px-4 py-8 md:px-8">
@@ -35,7 +41,7 @@ export function LeaderboardPage() {
         </div>
       </div>
 
-      <div className="mb-6 flex flex-wrap gap-3">
+      <div className="mb-6 flex flex-wrap items-center gap-3">
         <label className="flex items-center gap-2 text-xs text-neutral-600">
           <span>{COPY.admin.filterField}</span>
           <select
@@ -75,6 +81,29 @@ export function LeaderboardPage() {
             <option value="date">{COPY.admin.sortDate}</option>
           </select>
         </label>
+        <label className="flex items-center gap-2 text-xs text-neutral-600">
+          <span>Order</span>
+          <select
+            value={sortDir}
+            onChange={(e) => setSortDir(e.target.value as SortDir)}
+            className="rounded-lg border border-[#E5E5E4] bg-white px-2 py-1.5 text-sm text-neutral-900"
+          >
+            <option value="desc">{COPY.admin.sortDescending}</option>
+            <option value="asc">{COPY.admin.sortAscending}</option>
+          </select>
+        </label>
+        <button
+          type="button"
+          className="ml-auto rounded-lg border border-[#E5E5E4] bg-white px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-50"
+          onClick={() => {
+            setField('all');
+            setStatus('all');
+            setSort('score');
+            setSortDir('desc');
+          }}
+        >
+          Reset filters
+        </button>
       </div>
 
       {loading && <p className="text-neutral-600">Loading…</p>}

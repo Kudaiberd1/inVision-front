@@ -25,7 +25,7 @@ export function LeaderboardTable({ candidates }: LeaderboardTableProps) {
               Submitted
             </th>
             <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-500">
-              AI Score
+              Score
             </th>
             <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-neutral-500">
               Status

@@ -22,6 +22,20 @@ export function EssayReviewPanel({ candidate }: EssayReviewPanelProps) {
 
   const hasHighlights = essayReview.highlights.length > 0;
 
+  const gradeFor = (s: number): number => {
+    if (s <= 0) return 0;
+    const g = Math.ceil((s / 100) * 3);
+    return Math.max(0, Math.min(3, g));
+  };
+
+  const grades = {
+    leadership: gradeFor(essayReview.criteriaScores.leadership),
+    proactiveness: gradeFor(essayReview.criteriaScores.proactiveness),
+    energy: gradeFor(essayReview.criteriaScores.energy),
+  };
+
+  const totalGrade = grades.leadership + grades.proactiveness + grades.energy;
+
   const leftPane = hasText ? (
     <div className="flex w-full min-w-0 flex-col gap-4">
       {essayPdfHref && (
@@ -103,13 +117,18 @@ export function EssayReviewPanel({ candidate }: EssayReviewPanelProps) {
             </div>
           )}
           <div className="flex flex-wrap items-center gap-6">
-            <ScoreRing score={essayReview.overallScore} label="Essay" />
+            <ScoreRing
+              score={(totalGrade / 9) * 100}
+              label="Essay (0–9)"
+              displayScore={totalGrade}
+            />
             <div className="min-w-[160px] flex-1 space-y-3">
               {CRITERIA.map((c) => (
                 <ScoreBar
                   key={c}
                   label={CRITERIA_LABELS[c] ?? c}
-                  score={essayReview.criteriaScores[c]}
+                  score={(grades[c] / 3) * 100}
+                  displayScore={grades[c]}
                 />
               ))}
             </div>

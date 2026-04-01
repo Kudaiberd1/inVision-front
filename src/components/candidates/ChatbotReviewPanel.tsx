@@ -19,6 +19,20 @@ export function ChatbotReviewPanel({ candidate }: ChatbotReviewPanelProps) {
 
   const totalTurns = chatbotAnalysis.conversations.length;
 
+  const gradeFor = (s: number): number => {
+    if (s <= 0) return 0;
+    const g = Math.ceil((s / 100) * 3);
+    return Math.max(0, Math.min(3, g));
+  };
+
+  const grades: Record<Criteria, number> = {
+    leadership: gradeFor(chatbotAnalysis.criteriaScores.leadership),
+    proactiveness: gradeFor(chatbotAnalysis.criteriaScores.proactiveness),
+    energy: gradeFor(chatbotAnalysis.criteriaScores.energy),
+  };
+
+  const totalGrade = grades.leadership + grades.proactiveness + grades.energy;
+
   return (
     <ReviewSplitPane
       left={
@@ -75,13 +89,18 @@ export function ChatbotReviewPanel({ candidate }: ChatbotReviewPanelProps) {
       right={
         <div className="space-y-6">
           <div className="flex flex-wrap items-center gap-6">
-            <ScoreRing score={chatbotAnalysis.overallScore} label="Chatbot" />
+            <ScoreRing
+              score={(totalGrade / 9) * 100}
+              label="Chatbot (0–9)"
+              displayScore={totalGrade}
+            />
             <div className="min-w-[160px] flex-1 space-y-3">
               {CRITERIA.map((c) => (
                 <ScoreBar
                   key={c}
                   label={CRITERIA_LABELS[c] ?? c}
-                  score={chatbotAnalysis.criteriaScores[c]}
+                  score={(grades[c] / 3) * 100}
+                  displayScore={grades[c]}
                 />
               ))}
             </div>

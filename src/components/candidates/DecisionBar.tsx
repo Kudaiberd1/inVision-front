@@ -29,7 +29,7 @@ export function DecisionBar({ candidate, onStatusChange, onToast }: DecisionBarP
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#E5E5E4] bg-white/95 px-4 py-4 backdrop-blur md:left-56 md:px-8">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="font-semibold text-neutral-900">{candidate.fullName}</span>
+          <span className="font-semibold text-neutral-900">Status</span>
           <Badge className={`rounded-full text-xs font-medium ${pill}`}>
             {status === 'accepted'
               ? COPY.admin.decisionAccepted

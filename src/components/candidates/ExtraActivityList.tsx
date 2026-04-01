@@ -50,15 +50,6 @@ export function ExtraActivityList({ activities, onView }: ExtraActivityListProps
                     <span className="text-xs text-neutral-500">@{activity.handle}</span>
                   </div>
                   <div className="mt-1 flex flex-wrap items-center gap-2">
-                    <Badge
-                      className={
-                        isAvailable
-                          ? 'bg-emerald-50 text-emerald-800 ring-emerald-100'
-                          : 'bg-neutral-100 text-neutral-600 ring-neutral-200'
-                      }
-                    >
-                      {isAvailable ? 'Available' : 'Not submitted'}
-                    </Badge>
                     {isAvailable && (
                       <Badge
                         className={`score-number ${

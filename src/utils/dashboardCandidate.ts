@@ -8,7 +8,7 @@ import type {
   EssayReview,
   FieldOfStudy,
 } from '../types';
-import { FIELDS_OF_STUDY, PROGRAMS } from '../constants';
+import { FIELDS_OF_STUDY } from '../constants';
 
 /** Row from GET /api/dashboard/candidates */
 export interface DashboardCandidateListItem {
@@ -63,16 +63,6 @@ function coerceFieldOfStudy(raw: string): FieldOfStudy {
   const t = raw.trim();
   if ((FIELDS_OF_STUDY as readonly string[]).includes(t)) return t as FieldOfStudy;
   return 'Technology';
-}
-
-function programFromDashboard(programId: string, fieldOfStudy: FieldOfStudy): Candidate['program'] {
-  const byId = PROGRAMS.find((p) => p.id === programId);
-  if (byId) return byId;
-  return {
-    id: programId || 'unknown',
-    category: fieldOfStudy,
-    name: fieldOfStudy,
-  };
 }
 
 function emptyChatbot(): ChatbotAnalysis {
@@ -134,7 +124,6 @@ export function dashboardListItemToCandidate(row: DashboardCandidateListItem): C
     fullName: row.fullName,
     email: row.email,
     fieldOfStudy,
-    program: programFromDashboard(row.programId, fieldOfStudy),
     submissionDate: row.submissionDate,
     aiScore: row.aiScore,
     criteriaScores: row.criteriaScores,

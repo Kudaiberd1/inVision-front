@@ -2,6 +2,10 @@ export const ENDPOINTS = {
   AUTH_LOGIN: '/api/auth/login',
 
   DASHBOARD_CANDIDATES: '/api/dashboard/candidates',
+  DASHBOARD_CANDIDATE_DETAIL: (id: string) =>
+    `/api/dashboard/candidates/${encodeURIComponent(id)}`,
+  DASHBOARD_SCORE_OVERVIEW: (id: string) =>
+    `/api/dashboard/candidates/${encodeURIComponent(id)}/score-overview`,
   DASHBOARD_CV_REVIEW: (id: string) => `/api/dashboard/candidates/${encodeURIComponent(id)}/cv-review`,
   DASHBOARD_ESSAY_REVIEW: (id: string) => `/api/dashboard/candidates/${encodeURIComponent(id)}/essay-review`,
   DASHBOARD_CHATBOT: (id: string) => `/api/dashboard/candidates/${encodeURIComponent(id)}/chatbot-analysis`,

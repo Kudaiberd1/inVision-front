@@ -1,6 +1,11 @@
 // --- Shared ---
 export type DecisionStatus = 'pending' | 'accepted' | 'rejected';
-export type FieldOfStudy = 'Technology' | 'Business' | 'Social Impact' | 'Design' | 'Science';
+export type FieldOfStudy =
+  | 'Sociology: Leadership and Innovation'
+  | 'Digital Media and Marketing'
+  | 'Innovative IT Product Design and Development'
+  | 'Public Policy and Development'
+  | 'Creative Engineering';
 export type StudentLevel = 'school' | 'college-university';
 export type Criteria = 'leadership' | 'proactiveness' | 'energy';
 
@@ -117,8 +122,18 @@ export interface Candidate {
   id: string;
   fullName: string;
   email: string;
+  phone?: string | null;
+  dateOfBirth?: string | null;
+  city?: string | null;
+  school?: string | null;
+  untScore?: number | null;
+  ielts?: number | null;
+  toefl?: number | null;
+  codeforces?: string | null;
+  leetcode?: string | null;
+  github?: string | null;
+  linkedin?: string | null;
   fieldOfStudy: FieldOfStudy;
-  program: Program;
   submissionDate: string;
   aiScore: number;
   criteriaScores: CriteriaScore;
@@ -140,6 +155,7 @@ export interface Candidate {
   essayPdfUrl?: string | null;
   /** Legacy or alternate essay file URL; used if `essayPdfUrl` is absent */
   essayUrl?: string | null;
+  videoUrl?: string | null;
   cvReview: CVReview;
   essayReview: EssayReview;
   chatbotAnalysis: ChatbotAnalysis;

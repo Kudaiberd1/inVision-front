@@ -22,6 +22,20 @@ export function CVReviewPanel({ candidate }: CVReviewPanelProps) {
 
   const hasHighlights = cvReview.highlights.length > 0;
 
+  const gradeFor = (s: number): number => {
+    if (s <= 0) return 0;
+    const g = Math.ceil((s / 100) * 3);
+    return Math.max(0, Math.min(3, g));
+  };
+
+  const grades = {
+    leadership: gradeFor(cvReview.criteriaScores.leadership),
+    proactiveness: gradeFor(cvReview.criteriaScores.proactiveness),
+    energy: gradeFor(cvReview.criteriaScores.energy),
+  };
+
+  const totalGrade = grades.leadership + grades.proactiveness + grades.energy;
+
   const leftPane = hasText ? (
     <div className="flex w-full min-w-0 flex-col gap-4">
       {cvPdfHref && (
@@ -90,13 +104,18 @@ export function CVReviewPanel({ candidate }: CVReviewPanelProps) {
       right={
         <div className="space-y-6">
           <div className="flex flex-wrap items-center gap-6">
-            <ScoreRing score={cvReview.overallScore} label="Overall CV Score" />
+            <ScoreRing
+              score={(totalGrade / 9) * 100}
+              label="CV (0–9)"
+              displayScore={totalGrade}
+            />
             <div className="min-w-[160px] flex-1 space-y-3">
               {CRITERIA.map((c) => (
                 <ScoreBar
                   key={c}
                   label={CRITERIA_LABELS[c] ?? c}
-                  score={cvReview.criteriaScores[c]}
+                  score={(grades[c] / 3) * 100}
+                  displayScore={grades[c]}
                 />
               ))}
             </div>

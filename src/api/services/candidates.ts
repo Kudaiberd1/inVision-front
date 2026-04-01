@@ -8,6 +8,7 @@ import {
 } from '../../utils/dashboardCandidate';
 import {
   fetchDashboardCandidates,
+  fetchDashboardCandidateDetail,
   fetchDashboardChatbotAnalysis,
   fetchDashboardCvReview,
   fetchDashboardEssayReview,
@@ -40,11 +41,31 @@ export const fetchCandidateById = async (id: string): Promise<Candidate> => {
     base = dashboardListItemToCandidate(row);
   }
 
-  const [cv, essay, chat] = await Promise.all([
+  const [detail, cv, essay, chat] = await Promise.all([
+    fetchDashboardCandidateDetail(id),
     fetchDashboardCvReview(id),
     fetchDashboardEssayReview(id),
     fetchDashboardChatbotAnalysis(id),
   ]);
 
-  return mergeCandidateDetail(base, cv, essay, chat);
+  const merged = mergeCandidateDetail(base, cv, essay, chat);
+
+  return {
+    ...merged,
+    phone: detail.phone,
+    dateOfBirth: detail.dateOfBirth,
+    city: detail.city,
+    school: detail.schoolUniversity,
+    untScore: detail.untScore,
+    ielts: detail.ielts,
+    toefl: detail.toefl,
+    codeforces: detail.codeforces,
+    leetcode: detail.leetcode,
+    github: detail.github,
+    linkedin: detail.linkedin,
+    cvPdfUrl: detail.cvUrl ?? merged.cvPdfUrl,
+    essayPdfUrl: detail.motivationEssayUrl ?? merged.essayPdfUrl,
+    videoUrl: detail.videoUrl ?? merged.videoUrl,
+    status: detail.status as Candidate['status'],
+  };
 };

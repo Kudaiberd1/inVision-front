@@ -17,11 +17,11 @@ export const CRITERIA_DESCRIPTIONS: Record<string, string> = {
 export const SCORE_THRESHOLDS = { HIGH: 80, MID: 60 } as const;
 
 export const FIELDS_OF_STUDY: FieldOfStudy[] = [
-  'Technology',
-  'Business',
-  'Social Impact',
-  'Design',
-  'Science',
+  'Sociology: Leadership and Innovation',
+  'Digital Media and Marketing',
+  'Innovative IT Product Design and Development',
+  'Public Policy and Development',
+  'Creative Engineering',
 ];
 
 export const STUDENT_LEVELS: { value: StudentLevel; label: string }[] = [
@@ -157,9 +157,9 @@ export const COPY = {
       dateOfBirth: 'Date of Birth',
       city: 'City',
       school: 'School / University',
-      untScore: 'UNT score (optional)',
-      ielts: 'IELTS overall score (optional)',
-      toefl: 'TOEFL score (optional)',
+      untScore: 'UNT score',
+      ielts: 'IELTS overall score',
+      toefl: 'TOEFL score',
       studentLevel: 'Student type',
       codeforces: 'Codeforces profile (nickname, optional)',
       leetcode: 'LeetCode profile (nickname, optional)',
@@ -223,16 +223,16 @@ export const COPY = {
     refLabel: 'Application reference',
     home: 'Back to Homepage',
   },
-  admin: {
+    admin: {
     portalSubtitle: 'Admissions Portal',
     signIn: 'Sign In',
     demoHint: 'Demo access',
     candidates: 'Candidates',
     filterField: 'Field of study',
-    programColumn: 'Program',
+    programColumn: 'Field of study',
     filterStatus: 'Status',
-    sortScore: 'AI Score',
-    sortDate: 'Submission date',
+      sortScore: 'Score',
+      sortDate: 'Submission date',
     all: 'All',
     review: 'Review',
     back: 'Back',
@@ -247,8 +247,12 @@ export const COPY = {
     logout: 'Log out',
     previous: 'Previous',
     next: 'Next',
-    sortLabel: 'Sort',
+      sortLabel: 'Sort',
+      sortAscending: 'Ascending',
+      sortDescending: 'Descending',
     sections: {
+      overall: 'Overall',
+      details: 'Details',
       cv: 'CV Review',
       essay: 'Essay Review',
       chatbot: 'Chatbot Analysis',

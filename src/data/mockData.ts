@@ -1,4 +1,3 @@
-import { PROGRAMS } from '../constants';
 import type {
   Candidate,
   ChatbotQuestion,
@@ -8,14 +7,7 @@ import type {
   GithubStats,
   LeetcodeStats,
   LinkedinStats,
-  Program,
 } from '../types';
-
-function programById(id: string): Program {
-  const p = PROGRAMS.find((x) => x.id === id);
-  if (!p) throw new Error(`Unknown program: ${id}`);
-  return p;
-}
 
 export const CHATBOT_QUESTIONS: ChatbotQuestion[] = [
   {
@@ -141,8 +133,7 @@ export const MOCK_CANDIDATES: Candidate[] = [
     id: '1',
     fullName: 'Asel Nurlanova',
     email: 'asel.nurlanova@example.kz',
-    fieldOfStudy: 'Technology',
-    program: programById('it-product'),
+    fieldOfStudy: 'Innovative IT Product Design and Development',
     submissionDate: '2026-03-12T09:15:00.000Z',
     aiScore: 91,
     criteriaScores: cs(92, 90, 91),
@@ -275,8 +266,7 @@ export const MOCK_CANDIDATES: Candidate[] = [
     id: '2',
     fullName: 'Dauren Seitkali',
     email: 'dauren.seitkali@example.kz',
-    fieldOfStudy: 'Business',
-    program: programById('digital-media'),
+    fieldOfStudy: 'Digital Media and Marketing',
     submissionDate: '2026-03-14T14:40:00.000Z',
     aiScore: 84,
     criteriaScores: cs(88, 82, 78),
@@ -384,8 +374,7 @@ export const MOCK_CANDIDATES: Candidate[] = [
     id: '3',
     fullName: 'Madina Akhmetova',
     email: 'madina.akhmetova@example.kz',
-    fieldOfStudy: 'Social Impact',
-    program: programById('sociology'),
+    fieldOfStudy: 'Sociology: Leadership and Innovation',
     submissionDate: '2026-03-10T11:05:00.000Z',
     aiScore: 73,
     criteriaScores: cs(62, 58, 72),
@@ -472,8 +461,7 @@ export const MOCK_CANDIDATES: Candidate[] = [
     id: '4',
     fullName: 'Timur Bekuov',
     email: 'timur.bekuov@example.kz',
-    fieldOfStudy: 'Design',
-    program: programById('digital-media'),
+    fieldOfStudy: 'Digital Media and Marketing',
     submissionDate: '2026-03-15T16:22:00.000Z',
     aiScore: 68,
     criteriaScores: cs(70, 66, 68),
@@ -555,8 +543,7 @@ export const MOCK_CANDIDATES: Candidate[] = [
     id: '5',
     fullName: 'Aliya Smagulova',
     email: 'aliya.smagulova@example.kz',
-    fieldOfStudy: 'Science',
-    program: programById('engineering'),
+    fieldOfStudy: 'Creative Engineering',
     submissionDate: '2026-03-11T08:50:00.000Z',
     aiScore: 61,
     criteriaScores: cs(58, 78, 52),
@@ -638,8 +625,7 @@ export const MOCK_CANDIDATES: Candidate[] = [
     id: '6',
     fullName: 'Nursultan Dzhaksybekov',
     email: 'nursultan.dzhaksybekov@example.kz',
-    fieldOfStudy: 'Technology',
-    program: programById('it-product'),
+    fieldOfStudy: 'Innovative IT Product Design and Development',
     submissionDate: '2026-03-09T19:30:00.000Z',
     aiScore: 55,
     criteriaScores: cs(52, 54, 58),
@@ -721,8 +707,7 @@ export const MOCK_CANDIDATES: Candidate[] = [
     id: '7',
     fullName: 'Zarina Ospanova',
     email: 'zarina.ospanova@example.kz',
-    fieldOfStudy: 'Business',
-    program: programById('policy'),
+    fieldOfStudy: 'Public Policy and Development',
     submissionDate: '2026-03-13T10:00:00.000Z',
     aiScore: 88,
     criteriaScores: cs(90, 87, 88),
@@ -809,8 +794,7 @@ export const MOCK_CANDIDATES: Candidate[] = [
     id: '8',
     fullName: 'Arman Tulegenov',
     email: 'arman.tulegenov@example.kz',
-    fieldOfStudy: 'Social Impact',
-    program: programById('sociology'),
+    fieldOfStudy: 'Sociology: Leadership and Innovation',
     submissionDate: '2026-03-08T12:12:00.000Z',
     aiScore: 47,
     criteriaScores: cs(45, 48, 46),

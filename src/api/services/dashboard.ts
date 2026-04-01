@@ -15,6 +15,51 @@ export interface DashboardExtraResponse {
   linkedin?: string | null;
 }
 
+export interface DashboardCandidateDetailResponse {
+  id: number;
+  fullName: string;
+  email: string;
+  phone: string | null;
+  dateOfBirth: string | null;
+  city: string | null;
+  schoolUniversity: string | null;
+  untScore: number | null;
+  ielts: number | null;
+  toefl: number | null;
+  codeforces: string | null;
+  leetcode: string | null;
+  github: string | null;
+  linkedin: string | null;
+  fieldOfStudy: string;
+  cvUrl: string | null;
+  motivationEssayUrl: string | null;
+  videoUrl: string | null;
+  createdAt: string;
+  status: string;
+}
+
+export interface ScoreOverviewResponse {
+  overall: number;
+  cvPoints: number;
+  essayPoints: number;
+  chatPoints: number;
+  cvLeadershipPoints: number;
+  cvProactivenessPoints: number;
+  cvEnergyPoints: number;
+  essayLeadershipPoints: number;
+  essayProactivenessPoints: number;
+  essayEnergyPoints: number;
+  chatLeadershipPoints: number;
+  chatProactivenessPoints: number;
+  chatEnergyPoints: number;
+  untScore: number;
+  ieltsScore: number;
+  toeflScore: number;
+  untPoints: number;
+  ieltsPoints: number;
+  toeflPoints: number;
+}
+
 export async function fetchDashboardCandidates(): Promise<DashboardCandidateListItem[]> {
   const { data } = await apiClient.get<DashboardCandidateListItem[]>(ENDPOINTS.DASHBOARD_CANDIDATES);
   return data;
@@ -55,6 +100,22 @@ export async function patchDashboardCandidateStatus(
 export async function fetchDashboardExtra(id: string): Promise<DashboardExtraResponse> {
   const { data } = await apiClient.get<DashboardExtraResponse>(
     ENDPOINTS.DASHBOARD_EXTRA_ACTIVITIES(id),
+  );
+  return data;
+}
+
+export async function fetchDashboardCandidateDetail(
+  id: string,
+): Promise<DashboardCandidateDetailResponse> {
+  const { data } = await apiClient.get<DashboardCandidateDetailResponse>(
+    ENDPOINTS.DASHBOARD_CANDIDATE_DETAIL(id),
+  );
+  return data;
+}
+
+export async function fetchScoreOverview(id: string): Promise<ScoreOverviewResponse> {
+  const { data } = await apiClient.get<ScoreOverviewResponse>(
+    ENDPOINTS.DASHBOARD_SCORE_OVERVIEW(id),
   );
   return data;
 }

@@ -3,22 +3,24 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import type { DecisionStatus } from '../../types';
 import { COPY, ROUTES } from '../../constants';
-import { candidateCvPdfHref, candidateEssayPdfHref } from '../../utils/candidateDocuments';
-import { scorePillClass } from '../../utils/scoring';
 import { useCandidateDetail } from '../../hooks/useCandidateDetail';
 import { CVReviewPanel } from '../../components/candidates/CVReviewPanel';
 import { EssayReviewPanel } from '../../components/candidates/EssayReviewPanel';
 import { ChatbotReviewPanel } from '../../components/candidates/ChatbotReviewPanel';
+import { CandidateDetailsPanel } from '../../components/candidates/CandidateDetailsPanel';
+import { OverallTabContent } from '../../components/candidates/OverallTabContent';
 import ExtraTabContent from '../../components/candidates/ExtraTabContent';
 import { DecisionBar } from '../../components/candidates/DecisionBar';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 
 const SECTIONS = [
+  { key: 'details', label: COPY.admin.sections.details },
   { key: 'cv', label: COPY.admin.sections.cv },
   { key: 'essay', label: COPY.admin.sections.essay },
   { key: 'chat', label: COPY.admin.sections.chatbot },
   { key: 'extra', label: COPY.admin.sections.extra },
+  { key: 'overall', label: COPY.admin.sections.overall },
 ] as const;
 
 export function CandidateDetailPage() {
@@ -45,9 +47,6 @@ export function CandidateDetailPage() {
     );
   }
 
-  const pill = scorePillClass(candidate.aiScore);
-  const cvPdfHref = candidateCvPdfHref(candidate);
-  const essayPdfHref = candidateEssayPdfHref(candidate);
 
   return (
     <div className="bg-[#F7F7F5] pb-32">
@@ -69,10 +68,8 @@ export function CandidateDetailPage() {
           <h1 className="text-xl font-bold tracking-tight text-neutral-900 md:text-2xl">
             {candidate.fullName}
           </h1>
-          <span className="text-neutral-600">{candidate.program.name}</span>
-          <span className="text-neutral-400">·</span>
           <span className="text-sm text-neutral-500">{candidate.fieldOfStudy}</span>
-          <Badge className={`score-number rounded-full text-sm font-medium ${pill}`}>
+          <Badge className={`score-number rounded-full text-sm font-medium`}>
             {candidate.aiScore}
           </Badge>
         </div>
@@ -94,26 +91,6 @@ export function CandidateDetailPage() {
             </button>
           ))}
           <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
-            {cvPdfHref && (
-              <a
-                href={cvPdfHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex max-w-full rounded-full border border-[#E5E5E4] bg-white px-3 py-1 text-xs font-medium text-neutral-800 hover:bg-neutral-50"
-              >
-                {COPY.admin.openCvPdf}
-              </a>
-            )}
-            {essayPdfHref && (
-              <a
-                href={essayPdfHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex max-w-full rounded-full border border-[#E5E5E4] bg-white px-3 py-1 text-xs font-medium text-neutral-800 hover:bg-neutral-50"
-              >
-                {COPY.admin.openEssayPdf}
-              </a>
-            )}
             <span className="text-xs text-neutral-500">
               {section + 1} / {SECTIONS.length}
             </span>
@@ -122,10 +99,12 @@ export function CandidateDetailPage() {
       </div>
 
       <div className="min-h-[50vh] border-b border-[#E5E5E4] bg-white">
-        {section === 0 && <CVReviewPanel candidate={candidate} />}
-        {section === 1 && <EssayReviewPanel candidate={candidate} />}
-        {section === 2 && <ChatbotReviewPanel candidate={candidate} />}
-        {section === 3 && <ExtraTabContent candidateId={candidate.id} />}
+        {section === 0 && <CandidateDetailsPanel candidate={candidate} />}
+        {section === 1 && <CVReviewPanel candidate={candidate} />}
+        {section === 2 && <EssayReviewPanel candidate={candidate} />}
+        {section === 3 && <ChatbotReviewPanel candidate={candidate} />}
+        {section === 4 && <ExtraTabContent candidateId={candidate.id} />}
+        {section === 5 && <OverallTabContent candidateId={candidate.id} candidate={candidate} />}
       </div>
 
       <div className="mx-auto flex max-w-6xl justify-between gap-4 px-4 py-6 md:px-8">
